@@ -1,0 +1,1 @@
+Sklaffsk is a project for maintaining and enhancing the bbs-like system sklaffkom. The project has it's base in the Sklommon-community, but could benefit all sklaff-users. Sklaffsk can be run on almost any *ix.
