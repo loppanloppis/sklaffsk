@@ -1,0 +1,38 @@
+display_welcome();		/* Display welcome message */
+    srand(time(0));             /* Initialize random number generator */
+    /* Initialize parser	   */
+    if (parse_init(Program_name) == -1) {
+	sklaff_logout(0);
+    }
+    force_unsubscribe();
+    exec_login();		/* Execute user login script */
+    resume_aborted_edit();	/* Resume aborted editing  */
+    set_first_conf();
+    Current_text = last_text(Current_conf, Uid);
+    Last_text = Current_text;
+    cmd_where(args);
+    End_sklaff = 0;
+    while(!End_sklaff) {
+	display_msg(0);
+	color_high(YELLOW);
+	display_prompt(Prompt, "", 0);
+	Interrupt_input = 1;
+	Cont = 0;
+        color_high(WHITE);
+	input("", buf, LINE_LEN, 0, 0, 1);
+	color_high(CYAN);
+	Interrupt_input = 0;
+	ltrim(buf);
+	if (*buf == '\0') {
+	    strcpy(buf, Prompt);
+	}
+ 	if ((fcn = parse(buf, args)) ==  (int(*)()) -1) {
+	    break;
+	} else if (fcn) {
+	    if ((*fcn)(args) == -1) {
+		break;
+	    }
+	}
+    } 
+    sklaff_logout(0);			/* Get normal   */
+}
